@@ -1,0 +1,26 @@
+body {
+	background-color: white;
+}
+
+.text-colour {
+	color: black;
+}
+a {
+	text-decoration: none;
+	color: black;
+}
+
+a:hover{
+	opacity: 70%;
+}
+
+a:visited { 
+	text-decoration: none;
+	color: black;
+}
+
+.text-style {
+	font-family: helvetica;
+	font-size: 10vh;
+    position: relative;
+}
