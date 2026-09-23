@@ -1,26 +1,104 @@
 body {
-	background-color: white;
+    font-family: Helvetica, Arial, sans-serif;
 }
 
-.text-colour {
-	color: black;
-}
-a {
-	text-decoration: none;
-	color: black;
-}
-
-a:hover{
-	opacity: 70%;
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: flex-start;
 }
 
-a:visited { 
-	text-decoration: none;
-	color: black;
+.menu-item {
+    display: flex;
+    flex-direction: column;
 }
 
-.text-style {
-	font-family: helvetica;
-	font-size: 10vh;
+.trigger-row {
+    display: flex;
+    align-items: baseline;
+}
+
+.hover-trigger {
+    cursor: default;
+    font-size: 15vh;
+    padding-right: 20px;
+}
+
+span:hover {
+  opacity: 70%;
+}
+
+.expand-content {
+    display: flex;
+    gap: 30px;
+    opacity: 0;
+    max-width: 0;
+    transition: max-width 0.5s ease, opacity 0.5s ease;
+    white-space: nowrap;
+    padding-bottom: 40px; 
+    margin-bottom: -40px; 
+    pointer-events: none;
+
+}
+
+.menu-item:has(.hover-trigger:hover, .expand-content:hover, .paragraph-container:hover) .expand-content {
+    opacity: 1;
+    max-width: 1200px;
+    pointer-events: auto;
+}
+
+.link-container {
     position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.link-container a,
+.expand-content > a {
+    text-decoration: none;
+    color: black;
+    font-size: 15vh;
+}
+
+.expand-content > a {
+    padding-bottom: 40px;
+    margin-bottom: -40px;
+
+}
+
+.expand-content a:hover {
+    color: red;
+    opacity: 70%;
+    
+}
+
+.paragraph-container {
+    width: 100%;
+}
+
+.info-paragraph {
+    display: none;
+    font-size: 1.5rem;
+    color: black;
+    margin-top: 5px;
+    line-height: 1.4;
+    max-width: 1200px;
+}
+
+.menu-item:has(.journey-link:hover) .journey-paragraph,
+.journey-paragraph:hover {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+.menu-item:has(.experience-link:hover) .experience-paragraph,
+.experience-paragraph:hover {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
