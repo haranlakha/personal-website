@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Haran Lakha</title>
-        <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="main.css?v=4">
     </head>
     <body>
         <div class="menu">
@@ -11,13 +12,18 @@
                     <span class="hover-trigger">About</span>
                     <div class="expand-content">
                         <a href="#" class="experience-link">Experience</a>
-                        <a href="https://www.github.com/haranlakha">Portfolio</a>
+                        <div class="portfolio-wrap">
+                            <a href="https://www.github.com/haranlakha" class="portfolio-link">Portfolio</a>
+                            <div class="repo-dropdown" id="repo-dropdown">
+                                <span class="repo-status">Loading repositories…</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="link-container">
                     <p class="info-paragraph experience-paragraph">
                         My name is Haran and I'm a Software Engineer from the UK.
-                        I have experience working with Apex, Java and the Salesforce platform, along with frontend experience in JavaScript and HTML/CSS!
+I have experience working with Apex, Java and the Salesforce platform, along with frontend experience in JavaScript and HTML/CSS!
                     </p>
                 </div>
             </div>
@@ -32,5 +38,7 @@
                 </div>
             </div>
         </div>
+
+        <script src="main.js?v=4" defer></script>
     </body>
 </html>

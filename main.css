@@ -25,10 +25,6 @@ body {
     padding-right: 20px;
 }
 
-span:hover {
-  opacity: 70%;
-}
-
 .expand-content {
     display: flex;
     gap: 30px;
@@ -42,12 +38,6 @@ span:hover {
 
 }
 
-.menu-item:has(.hover-trigger:hover, .expand-content:hover, .paragraph-container:hover) .expand-content {
-    opacity: 1;
-    max-width: 1200px;
-    pointer-events: auto;
-}
-
 .link-container {
     position: relative;
     display: flex;
@@ -55,22 +45,18 @@ span:hover {
 }
 
 .link-container a,
-.expand-content > a {
+.expand-content > a,
+.portfolio-wrap > a {
     text-decoration: none;
     color: black;
     font-size: 15vh;
 }
 
-.expand-content > a {
+.expand-content > a,
+.portfolio-wrap > a {
     padding-bottom: 40px;
     margin-bottom: -40px;
 
-}
-
-.expand-content a:hover {
-    color: red;
-    opacity: 70%;
-    
 }
 
 .paragraph-container {
@@ -81,24 +67,227 @@ span:hover {
     display: none;
     font-size: 1.5rem;
     color: black;
-    margin-top: 5px;
+    margin-top: 0.3vh; /* closes the empty line-height space under the big text */
+    padding-left: 0.3vh; /* matches the "A" side bearing so text aligns */
     line-height: 1.4;
     max-width: 1200px;
-}
-
-.menu-item:has(.journey-link:hover) .journey-paragraph,
-.journey-paragraph:hover {
-    display: block;
-    animation: fadeIn 0.5s ease;
-}
-
-.menu-item:has(.experience-link:hover) .experience-paragraph,
-.experience-paragraph:hover {
-    display: block;
-    animation: fadeIn 0.5s ease;
 }
 
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+/* Portfolio dropdown */
+.portfolio-wrap {
+    position: relative;
+}
+
+.repo-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 10;
+    flex-direction: column;
+    gap: 4px;
+    width: max-content;
+    min-width: 280px;
+    max-width: 90vw;
+    max-height: 50vh;
+    overflow-y: auto;
+    margin-top: -3vh; /* closes the empty line-height space under the big text */
+    padding: 0 0 12px 1.2vh; /* left padding matches the "P" side bearing so text aligns */
+    scrollbar-width: none; /* hide scrollbar (Firefox) */
+    -ms-overflow-style: none;
+    background: white;
+    white-space: normal;
+}
+
+.repo-dropdown::-webkit-scrollbar {
+    display: none; /* hide scrollbar (Chrome/Safari) */
+}
+
+.repo-item {
+    display: flex;
+    flex-direction: column;
+    padding: 6px 0;
+    text-decoration: none;
+    color: black;
+}
+
+.repo-name {
+    font-size: 1.5rem;
+}
+
+.repo-desc {
+    font-size: 1rem;
+    color: #555;
+    max-width: 480px;
+}
+
+.repo-status {
+    font-size: 1.1rem;
+    color: #555;
+}
+
+/* ------------------------------------------------------------------
+   Desktop / mouse: everything opens on hover
+   ------------------------------------------------------------------ */
+@media (min-width: 701px) and (hover: hover) {
+    span:hover {
+        opacity: 70%;
+    }
+
+    .menu-item:has(.hover-trigger:hover, .expand-content:hover, .paragraph-container:hover) .expand-content {
+        opacity: 1;
+        max-width: 1200px;
+        pointer-events: auto;
+    }
+
+    .expand-content a:hover {
+        color: red;
+        opacity: 70%;
+    }
+
+    .menu-item:has(.journey-link:hover) .journey-paragraph,
+    .journey-paragraph:hover {
+        display: block;
+        animation: fadeIn 0.5s ease;
+    }
+
+    .menu-item:has(.experience-link:hover) .experience-paragraph,
+    .experience-paragraph:hover {
+        display: block;
+        animation: fadeIn 0.5s ease;
+    }
+
+    .portfolio-wrap:hover .repo-dropdown,
+    .portfolio-wrap:focus-within .repo-dropdown {
+        display: flex;
+        animation: fadeIn 0.5s ease;
+    }
+
+    .repo-item:hover .repo-name,
+    .repo-item:hover .repo-desc {
+        color: red;
+        opacity: 70%;
+    }
+}
+
+/* ------------------------------------------------------------------
+   Mobile / touch: tap to open. Everything opens downwards in one column:
+   About -> Experience (text) -> Portfolio (repo list), and Contact -> links.
+   ------------------------------------------------------------------ */
+@media (max-width: 700px), (hover: none) {
+    .menu {
+        gap: 16px;
+        width: 100%;
+    }
+
+    .menu-item {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        align-items: start;
+        row-gap: 0;
+        width: 100%;
+    }
+
+    /* Let the heading and links sit directly in the grid */
+    .menu .trigger-row,
+    .menu .expand-content {
+        display: contents;
+    }
+
+    /* The desktop hover-reveal sets pointer-events: none on this container,
+       and children inherit it, which made the links untappable. */
+    .menu .expand-content {
+        pointer-events: auto;
+        opacity: 1;
+        max-width: none;
+        transition: none;
+    }
+
+    .menu .hover-trigger {
+        grid-column: 1;
+        grid-row: 1;
+        font-size: clamp(2.8rem, 13vw, 4.5rem);
+        padding-right: 0;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Links only show once their heading is tapped open */
+    .menu-item:not(.open) .expand-content > * {
+        display: none;
+    }
+
+    .menu-item.open .expand-content > * {
+        animation: fadeIn 0.3s ease;
+    }
+
+    .menu .expand-content > a,
+    .menu .portfolio-wrap > a {
+        display: block;
+        font-size: 1.8rem;
+        margin-bottom: 0;
+        padding: 6px 0;
+    }
+
+    .menu .expand-content > a {
+        grid-column: 1;
+    }
+
+    /* About: Experience, its text, then Portfolio, then its repo list */
+    .menu .experience-link {
+        grid-row: 2;
+    }
+
+    .menu .link-container {
+        grid-column: 1;
+        grid-row: 3;
+    }
+
+    .menu .portfolio-wrap {
+        grid-column: 1;
+        grid-row: 4;
+    }
+
+    .menu .info-paragraph {
+        font-size: 1rem;
+        margin: 0;
+        padding: 4px 0 12px;
+        max-width: 100%;
+    }
+
+    .menu-item.exp-open .experience-paragraph {
+        display: block;
+        animation: fadeIn 0.3s ease;
+    }
+
+    /* Repo list drops down in the flow of the page */
+    .menu .repo-dropdown {
+        position: static;
+        margin: 0;
+        padding: 4px 0 12px;
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        max-height: 45vh;
+    }
+
+    .menu .portfolio-wrap.open .repo-dropdown {
+        display: flex;
+        animation: fadeIn 0.3s ease;
+    }
+
+    .repo-name {
+        font-size: 1.15rem;
+        overflow-wrap: anywhere;
+    }
+
+    .repo-desc {
+        font-size: 0.9rem;
+        max-width: 100%;
+    }
 }
